@@ -9,6 +9,15 @@
 
 \* Corresponding Author
 
+Link to the paper on OpenReview: https://openreview.net/forum?id=Z8UfDs4J46
+
+
+# **Abstract**
+Despite the notable advancements in deep reinforcement learning (DRL) in recent years, a prevalent issue that is often overlooked is the impact of signal delay. Signal delay occurs when there is a lag between an agent's perception of the environment and its corresponding actions. In this paper, we first formalize delayed-observation Markov decision processes (DOMDP) by extending the standard MDP framework to incorporate signal delays. Next, we elucidate the challenges posed by the presence of signal delay in DRL, showing that trivial DRL algorithms and generic methods for partially observable tasks suffer greatly from delays. Lastly, we propose effective strategies to overcome these challenges. Our methods achieve remarkable performance in continuous robotic control tasks with large delays, yielding results comparable to those in non-delayed cases. Overall, our work contributes to a deeper understanding of DRL in the presence of signal delays and introduces novel approaches to address the associated challenges.
+
+## Safe and Ethical Usage
+Note that the code has not been tested for real robots. The users should be responsible for ethical and safe usage of their robots when applying our algorithms to their hardwares.
+
 # **Environment Setup**
 
 Before you begin, please ensure that the following environment variables are correctly set: `UDATADIR`, `UPRJDIR`, and `UOUTDIR`. The operations you perform will only modify these three directories on your device.
@@ -190,6 +199,18 @@ Create a file named as `.env` in the project root and put the following in it, y
 
 ```latex
 WANDB_API_KEY="36049{change_to_your_wandb_key}215a1d76"
+```
+
+# BibTex
+```
+@inproceedings{
+wang2024addressing,
+title={Addressing Signal Delay in Deep Reinforcement Learning},
+author={Wei Wang and Dongqi Han and Xufang Luo and Dongsheng Li},
+booktitle={The Twelfth International Conference on Learning Representations},
+year={2024},
+url={https://openreview.net/forum?id=Z8UfDs4J46}
+}
 ```
 
 # Acknowledgements
