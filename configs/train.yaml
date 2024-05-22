@@ -1,0 +1,55 @@
+# @package _global_
+
+# specify here default configuration
+# order of defaults determines the order in which configs override each other
+defaults:
+  - _self_
+  - hydra: default.yaml
+  - paths: default.yaml
+
+  # experiment configs allow for version control of specific hyperparameters
+  # e.g. best hyperparameters for given model and datamodule
+  - experiment: null
+
+  # config for hyperparameter optimization
+  - hparams_search: null
+
+  # optional local config for machine/user specific settings
+  # it's optional since it doesn't need to exist and is excluded from version control
+  - optional local: default.yaml
+
+  # debugging config (enable through command line, e.g. `python train.py debug=default)
+  - debug: null
+
+# task name, determines output directory path
+task_name: "Defalut_Task"
+
+# tags to help you identify your experiments
+# you can overwrite this in experiment configs
+# overwrite from command line with `python train.py tags="[first_tag, second_tag]"`
+# appending lists from command line is currently not supported :(
+# https://github.com/facebookresearch/hydra/issues/1547
+tags: ["debug"]
+
+# set False to skip model training
+train: True
+
+# evaluate on test set, using best model weights achieved during training
+# lightning chooses best weights based on the metric specified in checkpoint callback
+test: True
+
+# simply provide checkpoint path to resume training
+ckpt_path: null
+
+# seed for random number generators in pytorch, numpy and python.random
+seed: null
+
+wandb:
+  buf_dir: false # if null would just output in the $OUTPUT, would cause IO problem when mount cloud as path
+  mode: disabled # online, offline or disabled
+
+output_dir: "${paths.output_dir}"
+
+device: "cuda"
+
+n_jobs: 1

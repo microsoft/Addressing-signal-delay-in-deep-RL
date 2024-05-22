@@ -1,0 +1,3 @@
+defaults:
+  - default.yaml
+sticky_action_prob: 0.3

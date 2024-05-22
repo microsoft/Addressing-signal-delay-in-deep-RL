@@ -1,0 +1,3 @@
+defaults:
+  - default.yaml
+noise_fraction: 0.3

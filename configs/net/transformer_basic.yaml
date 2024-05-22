@@ -1,0 +1,6 @@
+_target_: src.runner.TransformerNet
+_partial_: true
+hidden_layer_size: 256
+nhead_transformer: 1
+activation: relu
+num_layers: 2

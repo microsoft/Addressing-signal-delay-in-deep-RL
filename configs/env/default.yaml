@@ -1,0 +1,11 @@
+name: ???
+train_num: 1
+test_num: 1
+delay: ???
+fixed_delay: true
+sticky_action_prob: 0.0
+noise_fraction: 0.0 # for act
+gaussian_obs: 0.0 # for obs
+use_contact_forces: false
+max_step: 1000 # only used for gym_anm
+save_minari: false

@@ -1,0 +1,22 @@
+{
+	"name": "${localWorkspaceFolderBasename}-on-${localEnv:UDEVICEID}",
+	"context": ".",
+	"dockerFile": "Dockerfile",
+	"runArgs": [
+		"--name", "${localWorkspaceFolderBasename}-${localEnv:UDEVICEID}",
+		"--gpus=all",
+		"--volume", "${localEnv:UDATADIR}:/data",
+		"--volume", "${localEnv:UPRJDIR}:/code",
+		"--volume", "${localEnv:UOUTDIR}:/output",
+	],
+	"overrideCommand": false, // important! the default true will override the command in the dockerfile as "/bin/sh -c "while sleep 1000; do :; done"" so that tensorboard service will be down
+	"extensions": [
+		"ms-python.python",
+	],
+	// for China
+	"settings": {
+		"lldb.adapterType": "native",
+		"lldb.executable": "/usr/bin/lldb",
+		"terminal.integrated.shell.linux": "/bin/bash"
+	}
+}

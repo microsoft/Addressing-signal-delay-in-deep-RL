@@ -1,0 +1,140 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Python: Current File",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal",
+			"justMyCode": true
+		},
+
+		// TD3_SAC
+		{
+			"name": "RUN",
+			"type": "python",
+			"request": "launch",
+			"program": "${workspaceFolder}/src/entry.py",
+			"console": "integratedTerminal",
+			"justMyCode": true,
+			"noDebug": false,
+			"args": [
+				// "experiment=ddpg",
+				// "experiment=ddpg_rnn",
+				// "experiment=td3",
+				// "experiment=td3_rnn",
+				"experiment=ddpg",
+				// "experiment=pg",
+				// "experiment=cem",
+				// "experiment=dreamer",
+				// "experiment=sac_rnn",
+				// "experiment=ddpg_tianshou",
+				// "experiment=td3_tianshou",
+				// "experiment=obs_pred",
+				// "experiment=stack_rnn",
+				// "experiment=vlog_dummy",
+				"env.name=HalfCheetah-v4",
+				// "env.name=Reacher-v4",
+				// "env.name=gym_anm:ANM6Easy-v0",
+				// "env.name=Ant-v4",
+				// "env.name=Pendulum-v1",
+				// "env.name=DummyNum-v0",
+				// "env.name=Humanoid-v4",
+				// "env.name=HumanoidStandup-v4",
+				// "env.name=Swimmer-v4",
+				// "env.name=PandaReachDense-v3",
+				// "env.name=PandaPushDense-v3",
+				// "+env.push_reward_mode=f",
+				"+env.d_touch_ratio=0.5",
+				"+env.touch_rbase=1",
+				"+env.goal_rratio=10",
+
+				// "env.sticky_action_prob=0.3",
+				// "env.noise_fraction=0.15",
+				// "env.use_contact_forces=true",
+
+				"env.delay=0",
+				// "env.fixed_delay=false",
+				"env.save_minari=false",
+				// "global_cfg.debug.delay_keep_order_method=expect1",
+
+				"start_timesteps=100",
+				// "start_timesteps=10000",
+				// "start_timesteps=25000",
+				"trainer.episode_per_test=1",
+				"trainer.max_epoch=20",
+				"trainer.step_per_epoch=5000",
+				// "trainer.max_epoch=2",
+				// "trainer.step_per_epoch=500",
+				// "env.max_step=100",
+				// "trainer.batch_size=256", 
+				// "trainer.batch_seq_len=1",
+				// "trainer.batch_size=2048", 
+				// "trainer.batch_seq_len=1",
+				"trainer.batch_size=32",
+				"trainer.batch_seq_len=64",
+
+				// // ### obs pred
+				// "global_cfg.actor_input.obs_pred.turn_on=true",
+				// "global_cfg.actor_input.obs_encode.turn_on=false",
+
+				// ### obs encode
+				// "global_cfg.actor_input.obs_pred.turn_on=false",
+				// "global_cfg.actor_input.obs_encode.turn_on=true",
+				// "global_cfg.actor_input.obs_encode.policy_robust_weight=0.1",
+
+				// ### rnn critic
+				// "global_cfg.critic_input.obs_type=normal",
+				// "global_cfg.critic_input.history_merge_method=stack_rnn",
+				// "global_cfg.actor_input.obs_type=normal",
+				// "global_cfg.actor_input.history_merge_method=cat_mlp",
+				// "global_cfg.burnin_num=0.",
+				// "global_cfg.history_num=1",
+				// "global_cfg.critic_input.bi_or_si_rnn=si",
+
+				// ### oracle guided rnn actor
+				// "global_cfg.critic_input.obs_type=oracle",
+				// "global_cfg.critic_input.history_merge_method=none",
+				// "global_cfg.actor_input.obs_type=normal",
+				// "global_cfg.actor_input.history_merge_method=stack_rnn",
+				// "global_cfg.burnin_num=0.25",
+				// "global_cfg.history_num=1",
+
+				// ### oracle guided transformer actor
+				"global_cfg.critic_input.obs_type=oracle",
+				"global_cfg.critic_input.history_merge_method=none",
+				"global_cfg.actor_input.obs_type=normal",
+				"global_cfg.actor_input.history_merge_method=cat_mlp",
+				// "global_cfg.history_num=10",
+
+				// ### symmetricCatMlp
+				// "global_cfg.critic_input.obs_type=normal",
+				// "global_cfg.critic_input.history_merge_method=cat_mlp",
+				// "global_cfg.actor_input.obs_type=normal",
+				// "global_cfg.actor_input.history_merge_method=cat_mlp",
+
+				// ### FOR VSCODE
+				// "wandb.mode=disabled",
+				"wandb.mode=online",
+				"wandb.buf_dir=false",
+
+				// ### DEBUG - Fast
+				// "trainer.max_epoch=3",
+				// "trainer.step_per_epoch=50",
+				// "trainer.episode_per_test=2",
+				// "actor.heads_share_pre_net=false",
+				// "global_cfg.debug.auto_kl_use_log=true",
+				
+				// ### misc
+				// "global_cfg.actor_input.obs_encode.auto_kl_target=null",
+				// "global_cfg.actor_input.obs_encode.norm_kl_loss_weight=1e+2",
+				// "basic_net.activation=tanh",
+			],
+		},
+	],
+
+}

@@ -1,0 +1,30 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - default.yaml
+
+# common - for all tasks (task_name, tags, output_dir, device)
+policy:
+  tau: 0.005
+  gamma: 0.99
+  initial_exploration_noise: 0.1
+
+debug: # default value is the better one
+  use_terminated_mask_for_value: true
+
+actor:
+  unbounded: false
+  conditioned_sigma: true
+actor_optim:
+  lr: 1e-3 # 1e-3 in tianshou, 3e-4 in dongqi code. (For both actor and critic)
+
+runner:
+  _target_: src.runner.DDPGRunner
+
+
+start_timesteps: 25e3
+
+algorithm_name: ddpg

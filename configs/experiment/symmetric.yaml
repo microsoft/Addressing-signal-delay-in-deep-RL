@@ -1,0 +1,12 @@
+# @package _global_
+
+defaults:
+  - oracle_critic.yaml
+
+global_cfg:
+  actor_input:
+    history_merge_method: cat_mlp
+  critic_input:
+    history_merge_method: cat_mlp
+
+method_type: symmetric

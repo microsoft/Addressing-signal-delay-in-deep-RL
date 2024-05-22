@@ -1,0 +1,174 @@
+# @package _global_
+
+# default -> sac -> sac_rnn <- rnn_plugin
+# default -> td3 -> td3_rnn <- rnn_plugin
+# default -> ddpg -> ddpg_rnn <- rnn_plugin
+# default -> rnn_plugin
+defaults:
+  - /env: default.yaml
+  - /net@basic_mlp: mlp_basic.yaml
+  - /net@basic_rnn: rnn_basic.yaml
+  - /net@critic1.net_mlp: mlp_basic.yaml
+  - /net@critic1.net_rnn: rnn_basic.yaml
+  - /net@critic1.net_transformer: transformer_basic.yaml
+  - /net@actor.net_mlp: mlp_basic.yaml
+  - /net@actor.net_rnn: rnn_basic.yaml
+  - /net@actor.net_transformer: transformer_basic.yaml
+  - /net@global_cfg.actor_input.obs_pred.net.encoder_net_mlp: mlp_basic.yaml
+  - /net@global_cfg.actor_input.obs_pred.net.encoder_net_rnn: rnn_basic.yaml
+  - /net@global_cfg.actor_input.obs_pred.net.decoder_net: mlp_basic.yaml
+  - /net@global_cfg.actor_input.obs_encode.net.encoder_net_mlp: mlp_basic.yaml
+  - /net@global_cfg.actor_input.obs_encode.net.encoder_net_rnn: rnn_basic.yaml
+  - /net@global_cfg.actor_input.obs_encode.net.decoder_net: mlp_basic.yaml
+
+global_cfg: # would be passed to actor, critic1, critic2, policy, env
+  history_num: ${env.delay} # decide the info["historical_act"] length # would use ${env.delay}
+  burnin_num: 0.25
+  actor_input:
+    history_merge_method: "cat_mlp" # cat_mlp or stack_rnn or none
+    obs_type: "normal" # normal or oracle
+    obs_pred:
+      turn_on: false 
+      feat_dim: 256
+      middle_detach: true 
+      input_type: "feat" # obs or feat
+      net_type: mlp # vae or mlp
+      norm_kl_loss_weight: 1.0
+      auto_kl_target: 50
+      pred_loss_weight: 0.1
+      auto_kl_optim:
+        _target_: torch.optim.Adam
+        _partial_: true
+        lr: ${actor_optim.lr}
+      optim:
+        _target_: torch.optim.Adam
+        _partial_: true
+        lr: ${actor_optim.lr}
+      net:
+        _target_: src.runner.ObsPredNet
+        _partial_: true
+        device: ${device}
+        feat_dim: ${global_cfg.actor_input.obs_pred.feat_dim}
+        net_type: ${global_cfg.actor_input.obs_pred.net_type}
+        encoder_net_mlp: ???
+        encoder_net_rnn: ???
+        decoder_net: ???
+    obs_encode:
+      turn_on: false 
+      feat_dim: 256
+      net_type: mlp
+      train_eval_async: true # true is VLOG, false is normal training. only affect the training input
+      before_policy_detach: false # whether detach the input before policy net. Detail: there is no certain answer for which one is better.
+      norm_kl_loss_weight: 0.0001
+      auto_kl_target: 50
+      pred_loss_weight: 0.0
+      policy_robust_weight: 0.0 # 0.0 for skip
+      optim:
+        _target_: torch.optim.Adam
+        _partial_: true
+        lr: ${actor_optim.lr}
+      auto_kl_optim:
+        _target_: torch.optim.Adam
+        _partial_: true
+        lr: ${actor_optim.lr}
+      net:
+        _target_: src.runner.ObsEncodeNet
+        _partial_: true
+        net_type: ${global_cfg.actor_input.obs_pred.net_type}
+        feat_dim: ${global_cfg.actor_input.obs_encode.feat_dim}
+        device: ${device}
+        encoder_net_mlp: ???
+        encoder_net_rnn: ???
+        decoder_net: ???
+  critic_input:
+    history_merge_method: "none" # cat_mlp or stack_rnn or none
+    obs_type: "oracle" # normal or oracle
+    bi_or_si_rnn: "si" # "bi" or "si" or "both"
+  log_interval: 100
+  log_instant_commit: true # false would make the wandb sync only once per epoch
+  debug: # default value is the better one
+    entropy_mask_loss_renorm: false # true: mask->mean->renorm->loss # false: loss -> mask -> mean
+    use_log_alpha_for_mul_logprob: true
+    dongqi_log_prob_clamp: false 
+    dongqi_mu_sigma_reg_ratio: 0 # 1e-3 # 0 for skip # deprecated, can be used later
+    use_terminated_mask_for_value: true # FIXED
+    delay_keep_order_method: expect1 # FIXED none, expect1
+    rnn_turn_on_burnin: true # DEBUG: if burnin_num() and this == True, would turn on burnin
+    auto_kl_use_log: true # FIXED
+    auto_kl_divide_act_dim: true
+    new_his_act: true # return cur next in info
+    abort_infer_state: false # DEBUG: find that when state is aborted, the performance is better
+
+trainer:
+  batch_size: 32 # 256,1 for normal, 32,64 for donqi
+  batch_seq_len: 64 # would be used in buffer.seq_len 
+  # batch_size: 32
+  # batch_seq_len: 64
+  test_in_train: false
+  episode_per_test: 10
+  max_epoch: 200
+  step_per_epoch: 5000 # epoch is eval
+  # max_epoch: 10
+  # step_per_epoch: 1000 # epoch is eval
+  step_per_collect: 1
+  update_per_step: 1
+  log_interval: 100
+  log_upload_interval: 100 # 0 for instant upload
+  progress_bar: true
+  hide_eval_info_print: ${trainer.progress_bar}
+
+policy:
+  tau: 0.005
+  gamma: 0.99
+
+runner:
+  _target_: ???
+  _partial_: true
+
+
+actor:
+  _target_: src.runner.CustomRecurrentActorProb
+  _partial_: true
+  device: ${device}
+  unbounded: ???
+  net_mlp: ???
+  net_rnn: ???
+  net_transformer: ???
+  conditioned_sigma: ???
+  heads_share_pre_net: true
+  pure_random: false
+
+critic1:
+  _target_: src.runner.CustomRecurrentCritic
+  _partial_: true
+  device: ${device}
+  net_mlp: ???
+  net_rnn: ???
+  net_transformer: ???
+critic2: ${critic1}
+actor_optim:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: ???
+critic1_optim:
+  _target_: ${actor_optim._target_}
+  _partial_: true
+  lr: ${actor_optim.lr}
+critic2_optim: ${critic1_optim}
+
+# common - for all algorithms
+buffer: 
+  _target_: src.runner.ReplayBuffer
+  size: 1200000
+  seq_len: ${trainer.batch_seq_len} # would affect the remaster buffer gap len
+env_max_step: 5000
+env: ???
+
+
+start_timesteps: ???
+
+
+# common - for all tasks (task_name, tags, output_dir, device)
+algorithm_name: ???
+task_name: "RL_Apr2"
+tags: ["debug"]
