@@ -1,0 +1,33 @@
+version: 2
+updates:
+  # Enable version updates for pip dependencies
+  - package-ecosystem: "pip"
+    # The directory where your Python package is located
+    directory: "/"
+    # Schedule updates to run weekly
+    schedule:
+      interval: "weekly"
+    # Optionally, you can specify a day of the week to run the updates
+    # day: "monday"
+    # Optionally, you can specify the time of the day to run the updates
+    # time: "04:00"
+    # Optionally, you can specify a timezone
+    # timezone: "America/New_York"
+    # Optionally, you can specify dependencies to ignore
+    # ignore:
+    #   - dependency-name: "example-package"
+    #     versions: ["1.x", "2.0.0"]
+    # Optionally, you can allow only specific types of updates
+    # allow:
+    #   - dependency-type: "all"
+    # Optionally, you can include a list of reviewers for the pull requests
+    # reviewers:
+    #   - "username"
+    # Optionally, you can assign labels to the pull requests
+    # labels:
+    #   - "dependencies"
+    # Optionally, you can assign assignees to the pull requests
+    # assignees:
+    #   - "username"
+    # Optionally, you can set a limit for the number of open pull requests
+    # open-pull-requests-limit: 5
