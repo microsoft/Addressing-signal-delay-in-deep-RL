@@ -1,0 +1,31 @@
+name: CodeQL  
+  
+on:  
+  push:  
+    branches: [ main ]  
+  pull_request:  
+    branches: [ main ]  
+  schedule:  
+    - cron: '0 0 * * 0'  
+  
+jobs:  
+  analyze:  
+    name: Analyze  
+    runs-on: ubuntu-latest  
+  
+    strategy:  
+      matrix:  
+        language: [ 'python' ]  
+        # You can add more languages if your project uses them, e.g., 'java', 'javascript', etc.  
+  
+    steps:  
+    - name: Checkout repository  
+      uses: actions/checkout@v2  
+  
+    - name: Initialize CodeQL  
+      uses: github/codeql-action/init@v2  
+      with:  
+        languages: ${{ matrix.language }}  
+  
+    - name: Perform CodeQL Analysis  
+      uses: github/codeql-action/analyze@v2  
