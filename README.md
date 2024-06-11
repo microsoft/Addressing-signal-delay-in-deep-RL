@@ -11,46 +11,27 @@
 
 Link to the paper on OpenReview: https://openreview.net/forum?id=Z8UfDs4J46
 
+# **Introduction**
+Algorithms to Handle Signal Delay in Deep Reinforcement Learning aims to address the problem of signal delay in continuous robotic control. Signal delay occurs when there is a lag between an agent's perception of the environment and its corresponding actions. Our methods achieve remarkable performance in simulated continuous robotic control tasks with large delays, yielding results comparable to those in non-delayed cases.
 
 # **Abstract**
 Despite the notable advancements in deep reinforcement learning (DRL) in recent years, a prevalent issue that is often overlooked is the impact of signal delay. Signal delay occurs when there is a lag between an agent's perception of the environment and its corresponding actions. In this paper, we first formalize delayed-observation Markov decision processes (DOMDP) by extending the standard MDP framework to incorporate signal delays. Next, we elucidate the challenges posed by the presence of signal delay in DRL, showing that trivial DRL algorithms and generic methods for partially observable tasks suffer greatly from delays. Lastly, we propose effective strategies to overcome these challenges. Our methods achieve remarkable performance in continuous robotic control tasks with large delays, yielding results comparable to those in non-delayed cases. Overall, our work contributes to a deeper understanding of DRL in the presence of signal delays and introduces novel approaches to address the associated challenges.
+ 
+# **Intended Uses**
+The algorithms were developed especially for simulated continuous robotic control tasks. This includes tasks with potential future applications like robotic arm manipulation, humanoid robot walking, robot dog running and so on, where precise and timely responses are crucial despite the presence of signal delays.
 
-# Safe and Ethical Usage Statement
-Note that the code has not been tested for real robots. The users should be responsible for ethical and safe usage of their robots when applying our algorithms to their hardwares.
+# **Out of Scope Uses**
+These algorithms were developed in a simulated environment and have not been tested for use in real robots. Deploying the algorithms in the real world would require additional code development   and testing. Key areas needing attention include handling real-world noise, sensor calibration, and ensuring reliable communication. Expertise in robotics, control systems, and integration of hardware with deep reinforcement learning algorithms would be necessary to address these practical challenges.
 
-Also, our algorithms may work less effectively when there is extremely long delay (> 25 steps in MuJoCo, which corresponds to several seconds). Please ensure a comprehensive test before using in real world.
+# **Evaluation**  
+We tested the algorithms in the MuJoCo robotic control environments to demonstrate their effectiveness. See the [paper](https://openreview.net/forum?id=Z8UfDs4J46) for details.
 
-### Ethical Guidelines for Deploying Deep Reinforcement Learning Algorithms in Real Robots
+# **Limitations**
+These algorithms were developed in a simulated environment and have not been tested for use in real robots. Algorithms may work less effectively when there is an extremely long delay (> 25 steps in MuJoCo, which corresponds to several seconds).
 
-1. **Purpose and Intent**:
-   - Ensure the deployment of algorithms serves a positive and ethical purpose, enhancing human well-being and safety.
+# **Safe and Responsible Use**
+The user is responsible for applying algorithms safely and ethically. Considerations include physical safety risks, privacy and security concerns, and ethical implications of specific robotic applications. Comprehensive testing would be required to safely use these algorithms in the real world and such use is beyond the scope of our research.
 
-2. **Safety Measures**:
-   - Implement robust safety protocols to prevent accidents and harmful interactions between robots and humans.
-
-3. **Security**:
-   - Secure the algorithms and systems against unauthorized access and potential cyber-attacks.
-
-4. **Privacy**:
-   - Respect privacy rights and avoid deploying robots for invasive surveillance.
-
-5. **Transparency and Accountability**:
-   - Maintain transparency in the deployment process and establish clear accountability for the outcomes and impacts of the technology.
-
-6. **Regulatory Compliance**:
-   - Adhere to all relevant laws, regulations, and industry standards to ensure ethical and legal deployment.
-
-7. **Continuous Monitoring**:
-   - Regularly monitor and assess the robots' performance and impacts to identify and mitigate any emerging risks or ethical concerns.
-
-8. **Human Oversight**:
-   - Ensure that human oversight is integral to the deployment and operation of robots, allowing for intervention when necessary.
-
-9. **Avoid Harmful Applications**:
-   - Prohibit the use of algorithms in applications that could cause harm, such as autonomous weapons or criminal activities.
-
-10. **Collaboration with Stakeholders**:
-    - Engage with a diverse range of stakeholders, including ethicists, policymakers, and the public, to guide ethical deployment practices.
 
 # **Environment Setup**
 
