@@ -31,3 +31,12 @@ updates:
     #   - "username"
     # Optionally, you can set a limit for the number of open pull requests
     # open-pull-requests-limit: 5
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    groups:
+      github-actions:
+        patterns: ["*"]
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
